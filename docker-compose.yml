@@ -1,0 +1,51 @@
+services:
+  db:
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: group_projects
+      MYSQL_ROOT_PASSWORD: rootpassword
+        #MYSQL_ROOT_HOST: "%"
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      SECRET_KEY: change-this-before-production
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DB: group_projects
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+      CORS_ORIGINS: '["http://localhost:3000","http://127.0.0.1:3000"]'
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      - "3000:80"
+
+volumes:
+  mysql_data:
+
