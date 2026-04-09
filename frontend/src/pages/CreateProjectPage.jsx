@@ -37,37 +37,6 @@ export default function CreateProjectPage() {
   const { token } = useAuth();
   const navigate = useNavigate();
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setSubmitting(true);
-    setError("");
-
-    const validationError = validateProjectForm(form);
-    if (validationError) {
-      setError(validationError);
-      setSubmitting(false);
-      return;
-    }
-
-    try {
-      const project = await projectApi.create(
-        {
-          ...form,
-          title: form.title.trim(),
-          short_description: form.short_description.trim(),
-          description: form.description.trim(),
-          max_members: Number(form.max_members)
-        },
-        token
-      );
-      navigate(`/projects/${project.id}`);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
   return (
     <section className="panel form-panel">
       <div className="section-header">
@@ -77,7 +46,7 @@ export default function CreateProjectPage() {
         </div>
       </div>
 
-      <form className="stack-md" onSubmit={handleSubmit}>
+      <form className="stack-md">
         <div className="field">
           <label htmlFor="title">Nazwa projektu</label>
           <input
