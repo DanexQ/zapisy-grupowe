@@ -26,135 +26,7 @@ export default function ProjectPage() {
   const [editForm, setEditForm] = useState(null);
   const [editMode, setEditMode] = useState(false);
 
-  async function loadProject() {
-    setLoading(true);
-    try {
-      const data = await projectApi.get(projectId, token);
-      setProject(data);
-      setEditForm({
-        title: data.title,
-        short_description: data.short_description,
-        description: data.description,
-        max_members: data.max_members,
-        is_open: data.is_open
-      });
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    loadProject();
-  }, [projectId, token]);
-
-  async function handleJoin(event) {
-    event.preventDefault();
-    try {
-      await projectApi.join(projectId, joinForm, token);
-      setJoinForm({ strengths: "", preferred_role: "", message: "" });
-      await loadProject();
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-  async function handleReview(requestId, decision) {
-    try {
-      const updated = await projectApi.review(projectId, requestId, decision, token);
-      setProject(updated);
-      setEditForm({
-        title: updated.title,
-        short_description: updated.short_description,
-        description: updated.description,
-        max_members: updated.max_members,
-        is_open: updated.is_open
-      });
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-  async function handleRemoveMember(memberId) {
-    try {
-      const updated = await projectApi.removeMember(projectId, memberId, token);
-      setProject(updated);
-      setEditForm({
-        title: updated.title,
-        short_description: updated.short_description,
-        description: updated.description,
-        max_members: updated.max_members,
-        is_open: updated.is_open
-      });
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-  async function handleAnnouncement(event) {
-    event.preventDefault();
-    try {
-      const updated = await projectApi.addAnnouncement(projectId, announcementContent, token);
-      setProject(updated);
-      setAnnouncementContent("");
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-  async function handleProjectUpdate(event) {
-    event.preventDefault();
-    try {
-      const updated = await projectApi.update(
-        projectId,
-        {
-          ...editForm,
-          max_members: Number(editForm.max_members)
-        },
-        token
-      );
-      setProject(updated);
-      setEditForm({
-        title: updated.title,
-        short_description: updated.short_description,
-        description: updated.description,
-        max_members: updated.max_members,
-        is_open: updated.is_open
-      });
-      setEditMode(false);
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-  async function handleDeleteProject() {
-    const accepted = window.confirm("Czy na pewno chcesz usunąć ten projekt?");
-    if (!accepted) {
-      return;
-    }
-
-    try {
-      await projectApi.remove(projectId, token);
-      navigate("/");
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-  if (loading) {
-    return <div className="panel empty-state">Ładowanie szczegółów projektu...</div>;
-  }
-
-  if (error && !project) {
-    return <div className="panel error-box">{error}</div>;
-  }
-
+  
   return (
     <div className="stack-lg">
       {error ? <div className="panel error-box">{error}</div> : null}
@@ -216,7 +88,7 @@ export default function ProjectPage() {
           !project.has_pending_request &&
           project.available_slots > 0 &&
           project.is_open ? (
-            <form className="panel stack-md" onSubmit={handleJoin}>
+            <form className="panel stack-md">
               <h2>Zgłoszenie do projektu</h2>
               <div className="field">
                 <label htmlFor="join_strengths">W czym jesteś dobry?</label>
@@ -258,7 +130,7 @@ export default function ProjectPage() {
           ) : null}
 
           {project.is_member ? (
-            <form className="panel stack-md" onSubmit={handleAnnouncement}>
+            <form className="panel stack-md">
               <h2>Dodaj ogłoszenie</h2>
               <div className="field">
                 <label htmlFor="announcement">Wiadomość dla zespołu</label>
@@ -295,7 +167,7 @@ export default function ProjectPage() {
                 {project.can_manage && membership.user.id !== project.owner.id ? (
                   <button
                     className="button button-ghost"
-                    onClick={() => handleRemoveMember(membership.id)}
+                    onClick={() => {}}
                     type="button"
                   >
                     Usuń
@@ -351,14 +223,14 @@ export default function ProjectPage() {
                       <div className="button-row">
                         <button
                           className="button"
-                          onClick={() => handleReview(request.id, "accepted")}
+                          onClick={() => {}}
                           type="button"
                         >
                           Akceptuj
                         </button>
                         <button
                           className="button button-ghost"
-                          onClick={() => handleReview(request.id, "rejected")}
+                          onClick={() =>{}}
                           type="button"
                         >
                           Odrzuć
@@ -380,7 +252,7 @@ export default function ProjectPage() {
             </div>
 
             {editMode && editForm ? (
-              <form className="stack-md" onSubmit={handleProjectUpdate}>
+              <form className="stack-md">
                 <div className="field">
                   <label htmlFor="edit_title">Nazwa projektu</label>
                   <input
@@ -433,7 +305,7 @@ export default function ProjectPage() {
               </form>
             ) : null}
 
-            <button className="button button-danger" onClick={handleDeleteProject} type="button">
+            <button className="button button-danger" type="button">
               Usuń projekt
             </button>
           </div>
