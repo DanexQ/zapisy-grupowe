@@ -9,34 +9,6 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    let isActive = true;
-
-    const timeoutId = window.setTimeout(async () => {
-      setLoading(true);
-      try {
-        const data = await projectApi.list({ q: search, minSlots });
-        if (isActive) {
-          setProjects(data);
-          setError("");
-        }
-      } catch (err) {
-        if (isActive) {
-          setError(err.message);
-        }
-      } finally {
-        if (isActive) {
-          setLoading(false);
-        }
-      }
-    }, 250);
-
-    return () => {
-      isActive = false;
-      window.clearTimeout(timeoutId);
-    };
-  }, [search, minSlots]);
-
   return (
     <div className="stack-lg">
       <section className="hero">
