@@ -6,6 +6,7 @@ Pelnostosowa aplikacja do zapisow na projekty grupowe z backendem w FastAPI, fro
 
 - liste otwartych projektow z wyszukiwaniem i filtrem liczby wolnych miejsc,
 - rejestracje i logowanie uzytkownikow,
+- edycje wlasnego konta oraz podglad sekcji `Moje projekty` i `Moje zgloszenia`,
 - tworzenie nowych projektow przez wlascicieli,
 - strone projektu z opisem, skladem zespolu i tablica ogloszen,
 - proces skladania zgloszenia do projektu z opisem mocnych stron i preferowanej roli,
@@ -48,6 +49,16 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+```
+
+### Testy backendu
+
+```bash
+cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements-dev.txt
+pytest
 ```
 
 ### Frontend

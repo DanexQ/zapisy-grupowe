@@ -17,6 +17,14 @@ class UserCreate(UserBase):
     password: str = Field(min_length=8, max_length=255)
 
 
+class UserUpdate(BaseModel):
+    email: EmailStr | None = None
+    full_name: str | None = Field(default=None, min_length=2, max_length=255)
+    bio: str | None = Field(default=None, max_length=2000)
+    strengths: str | None = Field(default=None, max_length=2000)
+    preferred_role: str | None = Field(default=None, max_length=255)
+
+
 class UserPublic(UserBase):
     id: int
     created_at: datetime
@@ -123,3 +131,31 @@ class ProjectDetail(ProjectListItem):
     can_manage: bool = False
     is_member: bool = False
     has_pending_request: bool = False
+
+
+class UserProjectCollections(BaseModel):
+    owned_projects: list[ProjectListItem]
+    member_projects: list[ProjectListItem]
+
+
+class UserJoinRequestProjectInfo(BaseModel):
+    id: int
+    title: str
+    short_description: str
+    is_open: bool
+    owner: UserPublic
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserJoinRequestPublic(BaseModel):
+    id: int
+    message: str | None
+    strengths: str
+    preferred_role: str
+    status: JoinRequestStatus
+    created_at: datetime
+    reviewed_at: datetime | None
+    project: UserJoinRequestProjectInfo
+
+    model_config = ConfigDict(from_attributes=True)

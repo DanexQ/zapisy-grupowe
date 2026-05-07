@@ -26,6 +26,30 @@ export default function AuthPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(location.state?.from || "/", { replace: true });
+    }
+  }, [isAuthenticated, location.state, navigate]);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setSubmitting(true);
+    setError("");
+
+    try {
+      if (mode === "login") {
+        await authenticate("login", loginForm);
+      } else {
+        await authenticate("register", registerForm);
+      }
+      navigate(location.state?.from || "/", { replace: true });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <section className="auth-layout">
@@ -48,7 +72,7 @@ export default function AuthPage() {
           </button>
         </div>
 
-        <form className="stack-md">
+        <form className="stack-md" onSubmit={handleSubmit}>
           {mode === "register" ? (
             <>
               <div className="field">

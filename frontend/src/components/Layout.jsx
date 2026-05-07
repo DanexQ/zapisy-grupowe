@@ -18,16 +18,17 @@ export default function Layout({ children }) {
         <nav className="topnav">
           <NavLink to="/">Projekty</NavLink>
           {isAuthenticated ? <NavLink to="/projects/new">Dodaj projekt</NavLink> : null}
+          {isAuthenticated ? <NavLink to="/account">Konto</NavLink> : null}
           {!isAuthenticated ? <NavLink to="/auth">Logowanie / rejestracja</NavLink> : null}
         </nav>
 
         <div className="topbar-actions">
           {isAuthenticated ? (
             <>
-              <div className="user-chip">
+              <Link className="user-chip" to="/account">
                 <span>{user.full_name}</span>
                 <small>{user.preferred_role || "Uczestnik projektów"}</small>
-              </div>
+              </Link>
               <button className="button button-secondary" onClick={logout} type="button">
                 Wyloguj
               </button>

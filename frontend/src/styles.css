@@ -419,6 +419,7 @@ button {
 
 .info-box,
 .error-box,
+.success-box,
 .empty-state {
   color: var(--muted);
 }
@@ -426,6 +427,11 @@ button {
 .error-box {
   color: #7e2727;
   background: rgba(190, 88, 88, 0.08);
+}
+
+.success-box {
+  color: #16513f;
+  background: rgba(31, 106, 82, 0.1);
 }
 
 .empty-state {
@@ -504,11 +510,189 @@ button {
   margin: 0 auto;
 }
 
+.account-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.account-summary h1,
+.classroom-banner h1 {
+  margin: 0.35rem 0 0.7rem;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.account-summary p {
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.classroom-banner {
+  background:
+    linear-gradient(135deg, rgba(31, 106, 82, 0.16), rgba(255, 249, 239, 0.92)),
+    var(--surface-strong);
+}
+
+.classroom-banner-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+}
+
+.classroom-subtitle {
+  margin: 0;
+  max-width: 70ch;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.classroom-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.75fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.classroom-main,
+.classroom-sidebar,
+.announcement-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.classroom-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.classroom-stat-card {
+  padding: 1.1rem 1.2rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: var(--shadow);
+}
+
+.classroom-stat-card span,
+.section-heading span,
+.request-header small,
+.sidebar-note,
+.member-row small {
+  color: var(--muted);
+}
+
+.classroom-stat-card strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 1.1rem;
+}
+
+.classroom-stat-card small {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.section-card,
+.sidebar-card {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.dashboard-card {
+  padding: 1rem 1.05rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(53, 70, 57, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dashboard-card h3,
+.subsection-title {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.dashboard-card p,
+.dashboard-card small {
+  margin: 0;
+  color: var(--muted);
+}
+
+.dashboard-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.dashboard-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.section-heading h2 {
+  margin: 0;
+}
+
+.section-description {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.subtle-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+}
+
+.subtle-list li + li {
+  margin-top: 0.55rem;
+}
+
+.request-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 0.8rem;
+}
+
+.request-header strong {
+  display: block;
+}
+
+.sidebar-card h2 {
+  margin-top: 0;
+}
+
 @media (max-width: 960px) {
   .topbar,
   .project-hero,
   .hero,
-  .auth-layout {
+  .auth-layout,
+  .account-layout,
+  .classroom-shell {
     grid-template-columns: 1fr;
   }
 
@@ -521,12 +705,17 @@ button {
   .topnav,
   .filters,
   .detail-grid,
-  .inline-fields {
+  .inline-fields,
+  .classroom-banner-top {
     flex-direction: column;
   }
 
   .project-meta {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .classroom-overview {
+    grid-template-columns: 1fr;
   }
 }
 

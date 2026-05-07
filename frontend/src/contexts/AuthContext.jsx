@@ -9,6 +9,16 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(Boolean(localStorage.getItem(TOKEN_KEY)));
 
+  async function refreshUser(activeToken = token) {
+    if (!activeToken) {
+      return null;
+    }
+
+    const profile = await authApi.me(activeToken);
+    setUser(profile);
+    return profile;
+  }
+
   useEffect(() => {
     let isActive = true;
 
@@ -53,6 +63,12 @@ export function AuthProvider({ children }) {
     return response.user;
   }
 
+  async function updateProfile(payload) {
+    const updatedUser = await authApi.updateMe(payload, token);
+    setUser(updatedUser);
+    return updatedUser;
+  }
+
   function logout() {
     localStorage.removeItem(TOKEN_KEY);
     setToken(null);
@@ -67,6 +83,8 @@ export function AuthProvider({ children }) {
         loading,
         isAuthenticated: Boolean(token && user),
         authenticate,
+        refreshUser,
+        updateProfile,
         logout
       }}
     >

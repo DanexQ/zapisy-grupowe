@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AccountPage from "./pages/AccountPage";
 import AuthPage from "./pages/AuthPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import HomePage from "./pages/HomePage";
@@ -13,6 +14,14 @@ export default function App() {
         <Route element={<HomePage />} path="/" />
         <Route element={<AuthPage />} path="/auth" />
         <Route element={<ProjectPage />} path="/projects/:projectId" />
+        <Route
+          element={
+            <ProtectedRoute>
+              <AccountPage />
+            </ProtectedRoute>
+          }
+          path="/account"
+        />
         <Route
           element={
             <ProtectedRoute>

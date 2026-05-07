@@ -107,7 +107,15 @@ export async function apiRequest(path, options = {}) {
 export const authApi = {
   login: (payload) => apiRequest("/auth/login", { method: "POST", body: payload }),
   register: (payload) => apiRequest("/auth/register", { method: "POST", body: payload }),
-  me: (token) => apiRequest("/auth/me", { token })
+  me: (token) => apiRequest("/auth/me", { token }),
+  updateMe: (payload, token) =>
+    apiRequest("/auth/me", {
+      method: "PATCH",
+      body: payload,
+      token
+    }),
+  myProjects: (token) => apiRequest("/auth/me/projects", { token }),
+  myRequests: (token) => apiRequest("/auth/me/requests", { token })
 };
 
 export const projectApi = {
