@@ -31,13 +31,10 @@ Po uruchomieniu:
 - backend API: [http://localhost:8000](http://localhost:8000)
 - dokumentacja API: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-Blad `Host '...' is not allowed to connect to this MySQL server` zwykle oznacza, ze w istniejacym wolumenie MySQL zostaly stare uprawnienia uzytkownika. Skrypt z katalogu `db-init/` ustawia konto `appuser` dla polaczen z innych kontenerow, ale uruchamia sie tylko przy inicjalizacji pustej bazy.
-
 ## Struktura
 
 - `backend/` - FastAPI, SQLAlchemy, JWT auth, logika projektow i zgloszen
 - `frontend/` - React + React Router + Vite
-- `docker-compose.yml` - wspolne uruchamianie frontendu, backendu i MySQL
 
 ## Rozwoj lokalny bez Dockera
 
